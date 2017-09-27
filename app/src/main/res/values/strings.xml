@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">SimpleTweets</string>
+    <string name="app_name">Meowt</string>
     <string name="login_label">Log in</string>
     <string name="intent_scheme">oauth</string>
     <string name="intent_host">cprest</string>
+    <string name="write_tweet">Write tweet...</string>
+    <string name="send_tweet">Tweet</string>
+    <string name="cancel">Cancel</string>
+    <string name="your_tweet_here">Your tweet here</string>
 
 </resources>

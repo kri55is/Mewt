@@ -3,11 +3,13 @@ package com.codepath.apps.restclienttemplate.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 /**
  * Created by emilie on 9/25/17.
  */
 
-public class User {
+public class User implements Serializable{
 
     public String mName;
     public long mUid;

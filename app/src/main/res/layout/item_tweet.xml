@@ -13,7 +13,7 @@
         app:srcCompat="@android:color/black" />
 
     <TextView
-        android:id="@+id/tvUsername"
+        android:id="@+id/tvScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/ivProfileImage"
-        android:layout_below="@+id/tvUsername"
+        android:layout_below="@+id/tvScreenName"
         android:layout_marginLeft="5dp"
         android:layout_toEndOf="@+id/ivProfileImage"
         android:text="TextView" />
@@ -37,4 +37,14 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:text="TextView" />
+
+    <TextView
+        android:id="@+id/tvScreenname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/tvScreenName"
+        android:paddingLeft="5dp"
+        android:text="TextView"
+        android:textColor="@android:color/darker_gray" />
 </RelativeLayout>

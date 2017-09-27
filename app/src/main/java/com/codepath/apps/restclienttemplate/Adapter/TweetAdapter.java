@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.apps.restclienttemplate.models.User;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ import java.util.List;
 public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
 
     private List<Tweet> mTweets;
+    private User user;
 
     Context mContext;
 
@@ -49,6 +51,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
 
         //populate the views according to this data
         holder.tvUsername.setText(tweet.mUser.mName);
+        holder.tvScreenName.setText("@" + tweet.mUser.mScreenName);
         holder.tvBody.setText(tweet.mBody);
         holder.tvDate.setText(tweet.mCreatedAt);
 
@@ -69,6 +72,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
 
         public ImageView ivProfileImage;
         public TextView tvUsername;
+        public TextView tvScreenName;
         public TextView tvBody;
         public TextView tvDate;
 
@@ -77,7 +81,8 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder>{
 
             //perform findViewById lookup
             ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
-            tvUsername = (TextView) itemView.findViewById(R.id.tvUsername);
+            tvUsername = (TextView) itemView.findViewById(R.id.tvScreenName);
+            tvScreenName= (TextView) itemView.findViewById(R.id.tvScreenname);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvDate = (TextView) itemView.findViewById(R.id.tvDate);
 
