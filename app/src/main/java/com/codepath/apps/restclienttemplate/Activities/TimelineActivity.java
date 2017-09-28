@@ -142,7 +142,7 @@ public class TimelineActivity extends AppCompatActivity {
         client.getHomeTimeline(myJsonHttpResponseHandler);
     }
 
-    private void populateTimelineFromId(int startingId) {
+    private void populateTimelineFromId(long startingId) {
 
         client.getTimelineFromId(myJsonHttpResponseHandler,startingId);
     }
@@ -153,8 +153,10 @@ public class TimelineActivity extends AppCompatActivity {
         @Override
         public void run() {
             // Do something here on the main thread
-            Log.d(TAG, "Requested items id more than " + tweets.size());
-            populateTimelineFromId(tweets.size());
+            int numTweets = tweets.size();
+            long id = tweets.get(numTweets - 1).mUid + 1;
+            Log.d(TAG, "Requested items id starting at id = " + id);
+            populateTimelineFromId(id);
         }
     };
 
@@ -171,6 +173,7 @@ public class TimelineActivity extends AppCompatActivity {
             for (int i=0; i< response.length();i++){
                 try {
                     Tweet tweet = Tweet.fromJSON(response.getJSONObject(i));
+                    Log.d(TAG,"Adding tweet: " + tweet.mBody);
                     tweets.add(tweet);
                     tweetAdapter.notifyItemInserted(tweets.size() - 1);
                 }

@@ -1,12 +1,14 @@
 package com.codepath.apps.restclienttemplate.models;
 
 import android.text.format.DateUtils;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 
 /**
@@ -14,6 +16,8 @@ import java.util.Locale;
  */
 
 public class Tweet {
+
+    final static String TAG = "Tweet";
 
     public String mBody;
     public long mUid; //database ID fot the tweet
@@ -53,4 +57,11 @@ public class Tweet {
         return relativeDate;
     }
 
+    public static void logTweetsTitle(ArrayList<Tweet> tweets){
+        Log.d(TAG, "Printing tweets.");
+        for (int i = 0; i < tweets.size();i++) {
+            Log.d(TAG, " tweet " + i + " : " + tweets.get(i).mBody);
+        }
+
+    }
 }
