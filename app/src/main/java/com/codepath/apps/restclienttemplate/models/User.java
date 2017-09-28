@@ -2,14 +2,14 @@ package com.codepath.apps.restclienttemplate.models;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.Serializable;
+import org.parceler.Parcel;
 
 /**
  * Created by emilie on 9/25/17.
  */
 
-public class User implements Serializable{
+@Parcel
+public class User {
 
     public String mName;
     public long mUid;

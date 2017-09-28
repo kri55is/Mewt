@@ -14,6 +14,8 @@ import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.models.User;
 
+import org.parceler.Parcels;
+
 public class CreateTweetActivity extends AppCompatActivity {
 
     private Button btnCancel;
@@ -37,7 +39,7 @@ public class CreateTweetActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        user = (User) intent.getSerializableExtra("myUser");
+        user = (User) Parcels.unwrap(intent.getParcelableExtra("myUser"));
         tvScreenName.setText("@" + user.mScreenName);
 
         Glide.with(this).load(user.mProfileImageUrl).into(ivUserProfile);

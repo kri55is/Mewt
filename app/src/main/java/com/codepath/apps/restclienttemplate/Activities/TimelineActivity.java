@@ -25,6 +25,7 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -114,7 +115,7 @@ public class TimelineActivity extends AppCompatActivity {
             Log.d(TAG, "action create tweet clicked");
 
             Intent intent= new Intent(this, CreateTweetActivity.class);
-            intent.putExtra("myUser", myUser);
+            intent.putExtra("myUser", Parcels.wrap(myUser));
             startActivityForResult(intent, REQUEST_CODE);
 
             return true;
