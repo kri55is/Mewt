@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.R;
@@ -51,11 +52,18 @@ public class CreateTweetActivity extends AppCompatActivity {
     public void onClickSendButton(View view) {
 
         String text = etTweetText.getText().toString();
-        Intent intent = new Intent();
 
-        intent.putExtra("tweet", text);
+        if(text.length() <= 140) {
+            Intent intent = new Intent();
 
-        setResult(RESULT_OK, intent);
-        finish();
+            intent.putExtra("tweet", text);
+
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+        else{
+            Toast.makeText(this, "Tweets are limited to 140 characters", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
