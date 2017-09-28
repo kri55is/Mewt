@@ -37,11 +37,11 @@ public class TimelineActivity extends AppCompatActivity {
 
     private TwitterClient client;
 
-    private TweetAdapter tweetAdapter;
-    private ArrayList<Tweet> tweets;
-    private RecyclerView rvTweets;
-    private LinearLayoutManager layoutManager;
-    private EndlessRecyclerViewScrollListener endlessScrollListener;
+    private TweetAdapter mTweetAdapter;
+    private ArrayList<Tweet> mTweets;
+    private RecyclerView mRvTweets;
+    private LinearLayoutManager mLayoutManager;
+    private EndlessRecyclerViewScrollListener mEndlessScrollListener;
 
     private User myUser;
 
@@ -63,26 +63,26 @@ public class TimelineActivity extends AppCompatActivity {
         client = TwitterApp.getRestClient();
 
         //find the recycler view
-        rvTweets = (RecyclerView) findViewById(R.id.rvTweet);
+        mRvTweets = (RecyclerView) findViewById(R.id.rvTweet);
 
         //init the arrayList
-        tweets = new ArrayList<>();
+        mTweets = new ArrayList<>();
 
         //construct the adapter from this datasource
-        tweetAdapter = new TweetAdapter(tweets);
+        mTweetAdapter = new TweetAdapter(mTweets);
 
-        layoutManager = new LinearLayoutManager(this);
+        mLayoutManager = new LinearLayoutManager(this);
         //Recycler view setup
-        rvTweets.setLayoutManager(layoutManager);
-        rvTweets.setAdapter(tweetAdapter);
+        mRvTweets.setLayoutManager(mLayoutManager);
+        mRvTweets.setAdapter(mTweetAdapter);
 
-        endlessScrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+        mEndlessScrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 handler.postDelayed(makeQueryWithDelay, 3000);
             }
         };
-        rvTweets.addOnScrollListener(endlessScrollListener);
+        mRvTweets.addOnScrollListener(mEndlessScrollListener);
 
         myJsonHttpResponseHandler = new MyJsonHttpResponseHandler();
         myJsonHttpResponseHandlerUser = new MyJsonHttpResponseHandlerUser();
@@ -153,8 +153,8 @@ public class TimelineActivity extends AppCompatActivity {
         @Override
         public void run() {
             // Do something here on the main thread
-            int numTweets = tweets.size();
-            long id = tweets.get(numTweets - 1).mUid + 1;
+            int numTweets = mTweets.size();
+            long id = mTweets.get(numTweets - 1).mUid + 1;
             Log.d(TAG, "Requested items id starting at id = " + id);
             populateTimelineFromId(id);
         }
@@ -169,13 +169,13 @@ public class TimelineActivity extends AppCompatActivity {
 
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                Log.d(TAG, "Received " + response.length() + "tweets");
+                Log.d(TAG, "Received " + response.length() + "mTweets");
             for (int i=0; i< response.length();i++){
                 try {
                     Tweet tweet = Tweet.fromJSON(response.getJSONObject(i));
                     Log.d(TAG,"Adding tweet: " + tweet.mBody);
-                    tweets.add(tweet);
-                    tweetAdapter.notifyItemInserted(tweets.size() - 1);
+                    mTweets.add(tweet);
+                    mTweetAdapter.notifyItemInserted(mTweets.size() - 1);
                 }
                 catch (JSONException e){
                     e.printStackTrace();
@@ -230,12 +230,12 @@ public class TimelineActivity extends AppCompatActivity {
 
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-            Log.d(TAG, "Received " + response.length() + "tweets");
+            Log.d(TAG, "Received " + response.length() + "mTweets");
             for (int i=0; i< response.length();i++){
                 try {
                     Tweet tweet = Tweet.fromJSON(response.getJSONObject(i));
-                    tweets.add(tweet);
-                    tweetAdapter.notifyItemInserted(tweets.size() - 1);
+                    mTweets.add(tweet);
+                    mTweetAdapter.notifyItemInserted(mTweets.size() - 1);
                 }
                 catch (JSONException e){
                     e.printStackTrace();
@@ -281,8 +281,9 @@ public class TimelineActivity extends AppCompatActivity {
             Log.d(TAG, response.toString());
             try {
                 Tweet newTweet = Tweet.fromJSON(response);
-                tweets.add(0,newTweet);
-                tweetAdapter.notifyItemInserted(0);
+                mTweets.add(0,newTweet);
+                mTweetAdapter.notifyItemInserted(0);
+                mRvTweets.scrollToPosition(0);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -302,7 +303,7 @@ public class TimelineActivity extends AppCompatActivity {
 
         @Override
         public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-            Log.d(TAG, responseString.toString());
+            Log.d(TAG, responseString);
             throwable.printStackTrace();
         }
 
