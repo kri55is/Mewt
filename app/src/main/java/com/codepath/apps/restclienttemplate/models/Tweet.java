@@ -19,6 +19,7 @@ import java.util.Locale;
 public class Tweet {
 
     final static String TAG = "Tweet";
+    final public static int TWEET_MAX_SIZE = 140;
 
     public String mBody;
     public long mUid; //database ID fot the tweet

@@ -3,6 +3,8 @@ package com.codepath.apps.restclienttemplate.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.R;
+import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.apps.restclienttemplate.models.User;
 
 import org.parceler.Parcels;
@@ -25,6 +28,7 @@ public class CreateTweetActivity extends AppCompatActivity {
     private ImageView mIvUserProfile;
     private TextView mTvScreenName;
     private EditText mEtTweetText;
+    private TextView mTvCharLeft;
 
     private User mUser;
 
@@ -41,6 +45,7 @@ public class CreateTweetActivity extends AppCompatActivity {
         mIvUserProfile = (ImageView) findViewById(R.id.ivUserPicture);
         mTvScreenName = (TextView) findViewById(R.id.tvScreenName);
         mEtTweetText = (EditText) findViewById(R.id.etMessage);
+        mTvCharLeft = (TextView) findViewById(R.id.tvCharLeft);
 
         Intent intent = getIntent();
 
@@ -52,6 +57,30 @@ public class CreateTweetActivity extends AppCompatActivity {
                 .bitmapTransform(new RoundedCornersTransformation(this, mRadius, mMargin))
                 .into(mIvUserProfile);
 
+        mEtTweetText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                int charLeft = Tweet.TWEET_MAX_SIZE - s.length();
+                refreshCount(charLeft);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+    }
+
+    public void refreshCount(int charLeft){
+        String numCharLeft = "Char left: ";
+        numCharLeft +=Integer.toString(charLeft);
+        mTvCharLeft.setText(numCharLeft);
     }
 
     public void onClickCancelButton(View view) {

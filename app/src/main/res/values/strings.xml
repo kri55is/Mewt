@@ -9,5 +9,6 @@
     <string name="send_tweet">Tweet</string>
     <string name="cancel">Cancel</string>
     <string name="your_tweet_here">Your tweet here</string>
+    <string name="num_char_left">Char left: </string>
 
 </resources>

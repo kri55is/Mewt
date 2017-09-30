@@ -53,4 +53,12 @@
         android:ems="10"
         android:hint="@string/your_tweet_here"
         android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/tvCharLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/etMessage"
+        android:text="Char left: 140" />
 </RelativeLayout>
