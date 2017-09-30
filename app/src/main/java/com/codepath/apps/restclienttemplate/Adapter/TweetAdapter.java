@@ -2,6 +2,7 @@ package com.codepath.apps.restclienttemplate.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.apps.restclienttemplate.models.User;
@@ -31,8 +33,11 @@ public class TweetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private Context mContext;
 
-    private int mRadius = 30; // corner radius, higher value = more rounded
-    private int mMargin = 5; // crop margin, set to 0 for corners with no crop
+    private int mRadiusImageProfile = 30; // corner radius, higher value = more rounded
+    private int mMarginImageProfile = 5; // crop margin, set to 0 for corners with no crop
+
+    private int mRadiusImageTweet = 10; // corner radius, higher value = more rounded
+    private int mMarginImageTweet = 0; // crop margin, set to 0 for corners with no crop
 
     //pass in the Tweets array in the constructor
     public TweetAdapter(List<Tweet> tweets){
@@ -100,7 +105,7 @@ public class TweetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
         Glide.with(mContext)
                 .load(tweet.mUser.mProfileImageUrl)
-                .bitmapTransform(new RoundedCornersTransformation(mContext, mRadius, mMargin))
+                .bitmapTransform(new RoundedCornersTransformation(mContext, mRadiusImageProfile, mMarginImageProfile))
                 .into(holder.ivProfileImage);
     }
 
@@ -110,15 +115,19 @@ public class TweetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         holder.tvBody.setText(tweet.mBody);
         holder.tvDate.setText(tweet.mCreatedAt);
 
+        Log.d("TAdapter", "loading "+ tweet.mTweetImage);
         Glide.with(mContext)
-                .load("https://pbs.twimg.com/media/DKyhyM_VoAAxcb3.jpg")
-//                .load(tweet.mTweetImage)
+//                .load("http://pbs.twimg.com/media/DKyhyM_VoAAxcb3.jpg")
+                .load(tweet.mTweetImage)
+//                .fitCenter()
+                .override(200, Target.SIZE_ORIGINAL)
+                .bitmapTransform(new RoundedCornersTransformation(mContext, mRadiusImageTweet, mMarginImageTweet))
                 .into(holder.ivTweetImage);
 
 
         Glide.with(mContext)
                 .load(tweet.mUser.mProfileImageUrl)
-                .bitmapTransform(new RoundedCornersTransformation(mContext, mRadius, mMargin))
+                .bitmapTransform(new RoundedCornersTransformation(mContext, mRadiusImageProfile, mMarginImageProfile))
                 .into(holder.ivProfileImage);
 
     }
