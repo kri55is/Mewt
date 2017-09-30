@@ -16,33 +16,41 @@ import com.codepath.apps.restclienttemplate.models.User;
 
 import org.parceler.Parcels;
 
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
+
 public class CreateTweetActivity extends AppCompatActivity {
 
-    private Button btnCancel;
-    private Button btnSend;
-    private ImageView ivUserProfile;
-    private TextView tvScreenName;
-    private EditText etTweetText;
+    private Button mBtnCancel;
+    private Button mBtnSend;
+    private ImageView mIvUserProfile;
+    private TextView mTvScreenName;
+    private EditText mEtTweetText;
 
-    private User user;
+    private User mUser;
+
+    private int mRadius = 30; // corner radius, higher value = more rounded
+    private int mMargin = 5; // crop margin, set to 0 for corners with no crop
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_tweet);
 
-        btnCancel = (Button) findViewById(R.id.btnCancel);
-        btnSend = (Button) findViewById(R.id.btnSend);
-        ivUserProfile = (ImageView) findViewById(R.id.ivUserPicture);
-        tvScreenName = (TextView) findViewById(R.id.tvScreenName);
-        etTweetText = (EditText) findViewById(R.id.etMessage);
+        mBtnCancel = (Button) findViewById(R.id.btnCancel);
+        mBtnSend = (Button) findViewById(R.id.btnSend);
+        mIvUserProfile = (ImageView) findViewById(R.id.ivUserPicture);
+        mTvScreenName = (TextView) findViewById(R.id.tvScreenName);
+        mEtTweetText = (EditText) findViewById(R.id.etMessage);
 
         Intent intent = getIntent();
 
-        user = (User) Parcels.unwrap(intent.getParcelableExtra("myUser"));
-        tvScreenName.setText("@" + user.mScreenName);
+        mUser = (User) Parcels.unwrap(intent.getParcelableExtra("myUser"));
+        mTvScreenName.setText("@" + mUser.mScreenName);
 
-        Glide.with(this).load(user.mProfileImageUrl).into(ivUserProfile);
+        Glide.with(this)
+                .load(mUser.mProfileImageUrl)
+                .bitmapTransform(new RoundedCornersTransformation(this, mRadius, mMargin))
+                .into(mIvUserProfile);
 
     }
 
@@ -53,7 +61,7 @@ public class CreateTweetActivity extends AppCompatActivity {
 
     public void onClickSendButton(View view) {
 
-        String text = etTweetText.getText().toString();
+        String text = mEtTweetText.getText().toString();
 
         if(text.length() <= 140) {
             Intent intent = new Intent();

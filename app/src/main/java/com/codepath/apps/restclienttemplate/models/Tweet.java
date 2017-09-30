@@ -3,6 +3,7 @@ package com.codepath.apps.restclienttemplate.models;
 import android.text.format.DateUtils;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,6 +25,8 @@ public class Tweet {
     public User mUser;
     public String mCreatedAt;
 
+    public String mTweetImage="";
+
     //Deserialize JSON
 
     public static Tweet fromJSON(JSONObject jsonObject) throws JSONException{
@@ -34,6 +37,18 @@ public class Tweet {
         tweet.mCreatedAt = getRelativeTimeAgo(jsonObject.getString("created_at"));
 
         tweet.mUser = User.fromJson(jsonObject.getJSONObject("user"));
+
+        try{
+            JSONObject objEntity = jsonObject.getJSONObject("entities");
+//            Log.d(TAG, objEntity.toString());
+            JSONArray objMedia = objEntity.getJSONArray("media");
+//            Log.d(TAG, objMedia.toString());
+            String media_URL = objMedia.getJSONObject(0).getString("media_url");
+            tweet.mTweetImage = media_URL;
+        }
+        catch(JSONException e){
+            Log.d(TAG, "no image in this tweet");
+        }
 
         return tweet;
     }
