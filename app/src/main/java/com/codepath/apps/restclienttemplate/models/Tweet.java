@@ -69,6 +69,13 @@ public class Tweet {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        Log.d("dateFormat", "before " + relativeDate);
+
+        int firstSpace = relativeDate.indexOf(" ");
+        if (firstSpace != -1) {
+            relativeDate = relativeDate.substring(0, firstSpace+2);
+            Log.d("dateFormat", "after " + relativeDate);
+        }
 
         return relativeDate;
     }
