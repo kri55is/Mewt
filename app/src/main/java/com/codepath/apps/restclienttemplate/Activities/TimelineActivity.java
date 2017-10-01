@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -84,6 +85,8 @@ public class TimelineActivity extends AppCompatActivity {
             }
         };
         mRvTweets.addOnScrollListener(mEndlessScrollListener);
+
+        mRvTweets.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         myJsonHttpResponseHandler = new MyJsonHttpResponseHandler();
         myJsonHttpResponseHandlerUser = new MyJsonHttpResponseHandlerUser();
@@ -190,7 +193,7 @@ public class TimelineActivity extends AppCompatActivity {
                 //try again after 5 secondes?
                 handler.postDelayed(makeQueryWithDelay, 5000);
             }
-            Toast.makeText(getBaseContext(), "something went wrong" + statusCode, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "something went wrong: " + statusCode + ". errorResponse: ", Toast.LENGTH_SHORT).show();
 
             Log.d(TAG, errorResponse.toString());
             throwable.printStackTrace();
