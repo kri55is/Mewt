@@ -53,7 +53,9 @@ The following **additional** features are implemented:
 Here's a walkthrough of implemented user stories:
 
 [Link to GIF Walkthrough Login and browse](https://i.imgur.com/f16Mx3m.gif)
-[Link to GIF Walkthrough Write a Tweet] (https://imgur.com/a/AwCPx.gif)
+
+
+[Link to GIF Walkthrough Write a Tweet] (https://imgur.com/a/AwCPx)
 
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
