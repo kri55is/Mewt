@@ -158,7 +158,7 @@ public class TimelineActivity extends AppCompatActivity {
         public void run() {
             // Do something here on the main thread
             int numTweets = mTweets.size();
-            long id = mTweets.get(numTweets - 1).mUid + 1;
+            long id = mTweets.get(numTweets - 1).mUid - 1;
             Log.d(TAG, "Requested items id starting at id = " + id);
             populateTimelineFromId(id);
         }
