@@ -2,7 +2,7 @@
 
 *Meowt* is an android app that allows a user to view his Twitter timeline and post a new tweet. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
 
-Time spent: **X** hours spent in total
+Time spent: **16** hours spent in total
 
 ## User Stories
 
@@ -52,7 +52,11 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+[Link to GIF Walkthrough Login and browse](https://i.imgur.com/f16Mx3m.gif)
+
+
+[Link to GIF Walkthrough Write a Tweet] (https://imgur.com/a/AwCPx)
+
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
@@ -63,7 +67,7 @@ Describe any challenges encountered while building the app.
 ## Open-source libraries used
 
 - [Android Async HTTP](https://github.com/loopj/android-async-http) - Simple asynchronous HTTP requests with JSON parsing
-- [Picasso](http://square.github.io/picasso/) - Image loading and caching library for Android
+- [Glide] - Image loading and caching library for Android
 
 ## License
 
