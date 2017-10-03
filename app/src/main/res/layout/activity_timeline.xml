@@ -1,40 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.codepath.apps.restclienttemplate.Activities.TimelineActivity"
-    >
-
-    <!--<android.support.v7.widget.Toolbar-->
-        <!--android:id="@+id/toolbar"-->
-        <!--android:minHeight="?attr/actionBarSize"-->
-        <!--android:layout_width="16dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:titleTextColor="@android:color/white"-->
-        <!--android:background="?attr/colorPrimary"-->
-        <!--tools:layout_editor_absoluteY="0dp"-->
-        <!--tools:layout_editor_absoluteX="8dp"-->
-        <!--android:layout_marginRight="8dp">-->
-    <!--</android.support.v7.widget.Toolbar>-->
-
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/tbSearch"
+    android:id="@+id/tbSearch"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="?attr/colorPrimary"
+    android:minHeight="?attr/actionBarSize"
+    android:theme="?attr/actionBarTheme" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        tools:layout_editor_absoluteY="0dp" />
+        android:layout_height="wrap_content"
+        app:tabMode="fixed" />
 
-    <fragment
-        android:id="@+id/fragment_timeline"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/tbSearch"
-        class="com.codepath.apps.restclienttemplate.fragments.HomeTimelineFragment"/>
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:background="@android:color/white" />
 
-
-</RelativeLayout>
+</LinearLayout>

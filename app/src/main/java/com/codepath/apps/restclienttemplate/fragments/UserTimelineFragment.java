@@ -23,18 +23,23 @@ import cz.msebera.android.httpclient.Header;
  * Created by emilie on 10/2/17.
  */
 
-public class HomeTimelineFragment extends TweetsListFragments {
+public class UserTimelineFragment extends TweetsListFragments {
 
-    private final String TAG = "HomeTimelineFragmentTAG";
-
+    private final String TAG = "UserTimelineFragmentTAG";
     private TwitterClient client;
 
     private User myUser;
 
     private MyJsonHttpResponseHandler myJsonHttpResponseHandler;
     private MyJsonHttpResponseHandlerUser myJsonHttpResponseHandlerUser;
-    private MyJsonHttpResponseHandlerNewTweet myJsonHttpResponseHandlerNewTweet;
 
+    public static UserTimelineFragment newInstance(String screenName){
+        UserTimelineFragment userTimelineFragment = new UserTimelineFragment();
+        Bundle args = new Bundle();
+        args.putString("screen_name", screenName);
+        userTimelineFragment.setArguments(args);
+        return userTimelineFragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,26 +49,27 @@ public class HomeTimelineFragment extends TweetsListFragments {
 
         myJsonHttpResponseHandler = new MyJsonHttpResponseHandler();
         myJsonHttpResponseHandlerUser = new MyJsonHttpResponseHandlerUser();
-        myJsonHttpResponseHandlerNewTweet = new MyJsonHttpResponseHandlerNewTweet();
 
         getMyUSerInfo();
-        populateHomeTimeline();
+        populateUserTimeline();
 
     }
 
     private void getMyUSerInfo() {
+//         String screenName = getArguments().getString("screen_name");
         client.getUserInfo(myJsonHttpResponseHandlerUser);
     }
 
+    private void populateUserTimeline() {
+        String screenName = getArguments().getString("screen_name");
 
-    private void populateHomeTimeline() {
-
-        client.getHomeTimeline(myJsonHttpResponseHandler);
+        client.getUserTimeline(screenName, myJsonHttpResponseHandler);
     }
 
-    private void populateHomeTimelineFromId(long startingId) {
+    private void populateUserTimelineFromId(long startingId) {
+        String screenName = getArguments().getString("screen_name");
 
-        client.getTimelineFromId(myJsonHttpResponseHandler,startingId);
+        client.getUserTimelineFromId(screenName, myJsonHttpResponseHandler,startingId);
     }
 
     // Create the Handler object (on the main thread by default)
@@ -76,16 +82,9 @@ public class HomeTimelineFragment extends TweetsListFragments {
             int numTweets = tweets.size();
             long id = tweets.get(numTweets - 1).mUid - 1;
             Log.d(TAG, "Requested items id starting at id = " + id);
-            populateHomeTimelineFromId(id);
+            populateUserTimelineFromId(id);
         }
     };
-
-    public void postNewTweet(String text){
-
-        client.postNewTweet(myJsonHttpResponseHandlerNewTweet, text);
-
-    }
-
 
     public class MyJsonHttpResponseHandler extends JsonHttpResponseHandler
     {
@@ -149,7 +148,6 @@ public class HomeTimelineFragment extends TweetsListFragments {
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
             Log.d(TAG, "Received " + response.length() + "mTweets");
-//            addItems(response);
         }
 
         @Override
@@ -161,41 +159,6 @@ public class HomeTimelineFragment extends TweetsListFragments {
         @Override
         public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
             Log.d(TAG, responseString.toString());
-            throwable.printStackTrace();
-        }
-
-        @Override
-        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-            Toast.makeText(getContext(), "something went wrong" + statusCode, Toast.LENGTH_SHORT).show();
-
-            Log.d(TAG, errorResponse.toString());
-            throwable.printStackTrace();
-        }
-    }
-
-    public class MyJsonHttpResponseHandlerNewTweet extends JsonHttpResponseHandler
-    {
-        @Override
-        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-            Log.d(TAG, response.toString());
-            insertItem(response, 0);
-        }
-
-        @Override
-        public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-            Log.d(TAG, response.toString());
-        }
-
-        @Override
-        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-            Toast.makeText(getContext(), "something went wrong" + statusCode, Toast.LENGTH_SHORT).show();
-            Log.d(TAG, errorResponse.toString());
-            throwable.printStackTrace();
-        }
-
-        @Override
-        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-            Log.d(TAG, responseString);
             throwable.printStackTrace();
         }
 

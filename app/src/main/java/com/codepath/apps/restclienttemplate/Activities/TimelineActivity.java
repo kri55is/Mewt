@@ -2,25 +2,24 @@ package com.codepath.apps.restclienttemplate.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.codepath.apps.restclienttemplate.Adapter.TweetsPagerAdapter;
 import com.codepath.apps.restclienttemplate.R;
-import com.codepath.apps.restclienttemplate.fragments.TweetsListFragments;
+import com.codepath.apps.restclienttemplate.TwitterApp;
+import com.codepath.apps.restclienttemplate.TwitterClient;
 
 public class TimelineActivity extends AppCompatActivity {
 
     private final String TAG = "TimelineActivityTAG";
 
     private final int REQUEST_CODE = 20;
-
-    private TweetsListFragments fragmentTweetsList;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,17 +29,25 @@ public class TimelineActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.tbSearch);
         setSupportActionBar(toolbar);
 
+        //get view pager
+        ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
 
-        fragmentTweetsList = (TweetsListFragments) getSupportFragmentManager().findFragmentById(R.id.fragment_timeline);
+        //set the adapter for the pager
+        vpPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager(), this));
 
-
+        //setup
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(vpPager);
 
     }
 
+    private void getMyUSerInfo() {
+//        client.getUserInfo(myJsonHttpResponseHandlerUser);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_create_tweet, menu);
+        getMenuInflater().inflate(R.menu.menu_timeline, menu);
         return true;
     }
 
@@ -60,6 +67,11 @@ public class TimelineActivity extends AppCompatActivity {
             startActivityForResult(intent, REQUEST_CODE);
 
             return true;
+        }
+        if (id == R.id.miProfile){
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+
         }
 
         return super.onOptionsItemSelected(item);
