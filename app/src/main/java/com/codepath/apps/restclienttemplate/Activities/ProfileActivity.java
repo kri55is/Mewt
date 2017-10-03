@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.TwitterApp;
 import com.codepath.apps.restclienttemplate.TwitterClient;
@@ -17,10 +20,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class ProfileActivity extends AppCompatActivity {
 
     private final String TAG = "ProfileActivityTAG";
+
+    private int mRadius = 30; // corner radius, higher value = more rounded
+    private int mMargin = 5; // crop margin, set to 0 for corners with no crop
 
     TwitterClient client;
     MyJsonHttpResponseHandlerUser myJsonHttpResponseHandlerUser;
@@ -47,7 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
         myJsonHttpResponseHandlerUser = new MyJsonHttpResponseHandlerUser();
         client = TwitterApp.getRestClient();
 
-
+        client.getUserInfo(myJsonHttpResponseHandlerUser);
     }
 
     public class MyJsonHttpResponseHandlerUser extends JsonHttpResponseHandler
@@ -60,6 +67,9 @@ public class ProfileActivity extends AppCompatActivity {
                 Log.d(TAG, "my user name is " + myUser.mName + ", screen name " + myUser.mScreenName );
 
                 getSupportActionBar().setTitle(myUser.mScreenName);
+                
+                //populate User headline
+                populateUserHeadline(myUser);
             }
             catch (JSONException e) {
                 e.printStackTrace();
@@ -88,5 +98,26 @@ public class ProfileActivity extends AppCompatActivity {
             Log.d(TAG, errorResponse.toString());
             throwable.printStackTrace();
         }
+    }
+
+    private void populateUserHeadline(User user) {
+        TextView tvName = (TextView) findViewById(R.id.tvName);
+        TextView tvTagline = (TextView) findViewById(R.id.tvTagline);
+        TextView tvFollowers = (TextView) findViewById(R.id.tvFollowers);
+        TextView tvFollowing = (TextView) findViewById(R.id.tvFollowing);
+
+        ImageView ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
+
+        tvName.setText(user.mName);
+
+        tvTagline.setText(user.mTagline);
+        tvFollowers.setText(user.mFollowersCount + " Followers");
+        tvFollowing.setText(user.mFollowingCount + " Following");
+
+        //load profile image
+        Glide.with(this)
+                .load(user.mProfileImageUrl)
+                .bitmapTransform(new RoundedCornersTransformation(this, mRadius, mMargin))
+                .into(ivProfileImage);
     }
 }

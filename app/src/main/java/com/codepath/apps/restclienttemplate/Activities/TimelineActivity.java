@@ -9,13 +9,14 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.Adapter.TweetsPagerAdapter;
 import com.codepath.apps.restclienttemplate.R;
-import com.codepath.apps.restclienttemplate.TwitterApp;
-import com.codepath.apps.restclienttemplate.TwitterClient;
+import com.codepath.apps.restclienttemplate.fragments.TweetsListFragments;
+import com.codepath.apps.restclienttemplate.models.Tweet;
 
-public class TimelineActivity extends AppCompatActivity {
+public class TimelineActivity extends AppCompatActivity implements TweetsListFragments.TweetSelectedListener {
 
     private final String TAG = "TimelineActivityTAG";
 
@@ -93,5 +94,9 @@ public class TimelineActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onTweetSelected(Tweet tweet) {
+                Toast.makeText(this, tweet.mBody, Toast.LENGTH_SHORT).show();
 
+    }
 }

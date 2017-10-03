@@ -39,9 +39,18 @@ public class TweetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     private int mRadiusImageTweet = 10; // corner radius, higher value = more rounded
     private int mMarginImageTweet = 0; // crop margin, set to 0 for corners with no crop
 
+    private TweetAdapterListener mListener;
+
+    //define interface required by the ViewHolder
+    public interface TweetAdapterListener {
+        public void onItemSelected(View view,int position);
+
+    }
+
     //pass in the Tweets array in the constructor
-    public TweetAdapter(List<Tweet> tweets){
+    public TweetAdapter(List<Tweet> tweets, TweetAdapterListener listener){
         mTweets = tweets;
+        mListener = listener;
     }
 
     @Override
@@ -149,6 +158,7 @@ public class TweetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         public TextView tvBody;
         public TextView tvDate;
 
+
         public ViewHolder(View itemView) {
             super(itemView);
 
@@ -159,6 +169,19 @@ public class TweetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvDate = (TextView) itemView.findViewById(R.id.tvDate);
 
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null){
+                        //get position of row element
+                        int position = getAdapterPosition();
+
+                        //fire the listener back
+                        mListener.onItemSelected(v, position);
+                    }
+
+                }
+            });
         }
     }
 
@@ -172,6 +195,7 @@ public class TweetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         public TextView tvDate;
         public ImageView ivTweetImage;
 
+
         public ViewHolderWithImage(View itemView) {
             super(itemView);
 
@@ -183,6 +207,19 @@ public class TweetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             tvDate = (TextView) itemView.findViewById(R.id.tvDate);
             ivTweetImage = (ImageView) itemView.findViewById(R.id.ivTweetImage);
 
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null){
+                        //get position of row element
+                        int position = getAdapterPosition();
+
+                        //fire the listener back
+                        mListener.onItemSelected(v, position);
+                    }
+
+                }
+            });
         }
     }
 }
