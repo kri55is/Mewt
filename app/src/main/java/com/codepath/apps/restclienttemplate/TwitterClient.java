@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.codepath.oauth.OAuthBaseClient;
 import com.github.scribejava.apis.TwitterApi;
@@ -21,6 +22,8 @@ import com.loopj.android.http.RequestParams;
  * 
  */
 public class TwitterClient extends OAuthBaseClient {
+
+	public final String TAG = "TwitterClient";
 	public static final BaseApi REST_API_INSTANCE = TwitterApi.instance(); // Change this
 	public static final String REST_URL = "https://api.twitter.com/1.1";
 	public static final String REST_CONSUMER_KEY = "dKG74yXuv0Lv1gHNZc6S8A83P";       // Change this
@@ -101,12 +104,19 @@ public class TwitterClient extends OAuthBaseClient {
         client.get(apiUrl, handler);
     }
 
+	public void getSpecificUserInfo(String screenName, AsyncHttpResponseHandler handler) {
+		String apiUrl = getApiUrl("users/show.json");
+		RequestParams params = new RequestParams();
+		params.put("screen_name", screenName);
+		Log.d(TAG, "getSpecificUserInfo API call " + apiUrl + "?" + params.toString());
+		client.get(apiUrl,params, handler);
+	}
+
     public void postNewTweet(AsyncHttpResponseHandler handler, String text){
         String apiUrl = getApiUrl("statuses/update.json");
 
         RequestParams params = new RequestParams();
         params.put("status", text);
-//        client.addHeader("Content-Type", "application/x-www-form-urlencoded");
         client.post(apiUrl, params, handler);
     }
 
