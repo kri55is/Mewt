@@ -14,10 +14,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.R;
+import com.codepath.apps.restclienttemplate.models.Session;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.apps.restclienttemplate.models.User;
-
-import org.parceler.Parcels;
 
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
@@ -47,9 +46,9 @@ public class CreateTweetActivity extends AppCompatActivity {
         mEtTweetText = (EditText) findViewById(R.id.etMessage);
         mTvCharLeft = (TextView) findViewById(R.id.tvCharLeft);
 
-        Intent intent = getIntent();
+        Session session = Session.getInstance();
+        mUser = session.getMyUser();
 
-        mUser = (User) Parcels.unwrap(intent.getParcelableExtra("myUser"));
         mTvScreenName.setText("@" + mUser.mScreenName);
 
         Glide.with(this)

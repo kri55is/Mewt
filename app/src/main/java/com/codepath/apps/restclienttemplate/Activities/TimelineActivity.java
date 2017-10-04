@@ -9,10 +9,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.Adapter.TweetsPagerAdapter;
 import com.codepath.apps.restclienttemplate.R;
+import com.codepath.apps.restclienttemplate.TwitterApp;
+import com.codepath.apps.restclienttemplate.TwitterClient;
 import com.codepath.apps.restclienttemplate.fragments.TweetsListFragments;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
@@ -42,10 +43,6 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
 
     }
 
-    private void getMyUSerInfo() {
-//        client.getUserInfo(myJsonHttpResponseHandlerUser);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_timeline, menu);
@@ -64,7 +61,6 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
             Log.d(TAG, "action create tweet clicked");
 
             Intent intent= new Intent(this, CreateTweetActivity.class);
-//            intent.putExtra("myUser", Parcels.wrap(myUser));
             startActivityForResult(intent, REQUEST_CODE);
 
             return true;
@@ -84,7 +80,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
             String text = data.getStringExtra("tweet");
             Log.d(TAG, "New tweet :" + text);
 
-
+            TwitterClient client = TwitterApp.getRestClient();
 //            client.postNewTweet(myJsonHttpResponseHandlerNewTweet, text);
 
         } else {
@@ -96,7 +92,9 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
 
     @Override
     public void onTweetSelected(Tweet tweet) {
-                Toast.makeText(this, tweet.mBody, Toast.LENGTH_SHORT).show();
-
+//        Toast.makeText(this, tweet.mBody, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, ProfileActivity.class);
+        intent.putExtra("screen_name", tweet.mUser.mScreenName);
+        startActivity(intent);
     }
 }

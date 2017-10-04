@@ -51,10 +51,15 @@ public class ProfileActivity extends AppCompatActivity {
         ft.commit();
 
 
-        myJsonHttpResponseHandlerUser = new MyJsonHttpResponseHandlerUser();
         client = TwitterApp.getRestClient();
+        myJsonHttpResponseHandlerUser = new MyJsonHttpResponseHandlerUser();
 
-        client.getUserInfo(myJsonHttpResponseHandlerUser);
+        if(screen_name == null) {
+            client.getUserInfo(myJsonHttpResponseHandlerUser);
+        }
+        else{
+            client.getSpecificUserInfo(screen_name, myJsonHttpResponseHandlerUser);
+        }
     }
 
     public class MyJsonHttpResponseHandlerUser extends JsonHttpResponseHandler
@@ -63,13 +68,13 @@ public class ProfileActivity extends AppCompatActivity {
         public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
             Log.d(TAG, response.toString());
             try {
-                User myUser = User.fromJson(response);
-                Log.d(TAG, "my user name is " + myUser.mName + ", screen name " + myUser.mScreenName );
+                User user = User.fromJson(response);
+                Log.d(TAG, "User name is " + user.mName + ", screen name " + user.mScreenName );
 
-                getSupportActionBar().setTitle(myUser.mScreenName);
+                getSupportActionBar().setTitle(user.mScreenName);
                 
                 //populate User headline
-                populateUserHeadline(myUser);
+                populateUserHeadline(user);
             }
             catch (JSONException e) {
                 e.printStackTrace();

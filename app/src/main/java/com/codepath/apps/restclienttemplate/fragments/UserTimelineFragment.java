@@ -7,12 +7,12 @@ import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.TwitterApp;
 import com.codepath.apps.restclienttemplate.TwitterClient;
+import com.codepath.apps.restclienttemplate.models.Session;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.apps.restclienttemplate.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -31,7 +31,6 @@ public class UserTimelineFragment extends TweetsListFragments {
     private User myUser;
 
     private MyJsonHttpResponseHandler myJsonHttpResponseHandler;
-    private MyJsonHttpResponseHandlerUser myJsonHttpResponseHandlerUser;
 
     public static UserTimelineFragment newInstance(String screenName){
         UserTimelineFragment userTimelineFragment = new UserTimelineFragment();
@@ -48,16 +47,15 @@ public class UserTimelineFragment extends TweetsListFragments {
         client = TwitterApp.getRestClient();
 
         myJsonHttpResponseHandler = new MyJsonHttpResponseHandler();
-        myJsonHttpResponseHandlerUser = new MyJsonHttpResponseHandlerUser();
 
-        getMyUSerInfo();
+        //todo remove get my user info: we might want other user info
+        String screenName = getArguments().getString("screen_name");
+        if(screenName == null) {
+            Session session = Session.getInstance();
+            myUser = session.getMyUser();
+        }
         populateUserTimeline();
 
-    }
-
-    private void getMyUSerInfo() {
-//         String screenName = getArguments().getString("screen_name");
-        client.getUserInfo(myJsonHttpResponseHandlerUser);
     }
 
     private void populateUserTimeline() {
@@ -131,42 +129,5 @@ public class UserTimelineFragment extends TweetsListFragments {
         }
     }
 
-    public class MyJsonHttpResponseHandlerUser extends JsonHttpResponseHandler
-    {
-        @Override
-        public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-            Log.d(TAG, response.toString());
-            try {
-                myUser = User.fromJson(response);
-                Log.d(TAG, "my user name is " + myUser.mName + ", screen name " + myUser.mScreenName );
-            }
-            catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-            Log.d(TAG, "Received " + response.length() + "mTweets");
-        }
-
-        @Override
-        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-            Log.d(TAG, errorResponse.toString());
-            throwable.printStackTrace();
-        }
-
-        @Override
-        public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-            Log.d(TAG, responseString.toString());
-            throwable.printStackTrace();
-        }
-
-        @Override
-        public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-            Log.d(TAG, errorResponse.toString());
-            throwable.printStackTrace();
-        }
-    }
 
 }

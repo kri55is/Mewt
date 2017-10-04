@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.TwitterClient;
+import com.codepath.apps.restclienttemplate.models.Session;
 import com.codepath.oauth.OAuthLoginActionBarActivity;
 
 public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
@@ -31,6 +32,8 @@ public class LoginActivity extends OAuthLoginActionBarActivity<TwitterClient> {
 	@Override
 	public void onLoginSuccess() {
 		Toast.makeText(this, "Login Success", Toast.LENGTH_LONG).show();
+		//To get the users info from the start
+		Session session = Session.getInstance();
 		 Intent i = new Intent(this, TimelineActivity.class);
 		 startActivity(i);
 	}
