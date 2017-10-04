@@ -73,7 +73,7 @@ public class MentionsTimelineFragment extends TweetsListFragments {
 
         @Override
         public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-            Log.d(TAG, "Received " + response.length() + "mTweets");
+            Log.d(TAG, "Received " + response.length() + " Tweets");
 
             addItems(response);
         }
