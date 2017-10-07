@@ -10,10 +10,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.codepath.apps.restclienttemplate.Adapter.SmartFragmentStatePagerAdapter;
 import com.codepath.apps.restclienttemplate.Adapter.TweetsPagerAdapter;
 import com.codepath.apps.restclienttemplate.R;
-import com.codepath.apps.restclienttemplate.TwitterApp;
-import com.codepath.apps.restclienttemplate.TwitterClient;
+import com.codepath.apps.restclienttemplate.fragments.HomeTimelineFragment;
 import com.codepath.apps.restclienttemplate.fragments.TweetsListFragments;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
@@ -24,6 +24,10 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
 
     private final int REQUEST_CODE = 20;
 
+    private ViewPager vpPager;
+
+    private SmartFragmentStatePagerAdapter pagerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +37,11 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
         setSupportActionBar(toolbar);
 
         //get view pager
-        ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
+        vpPager = (ViewPager) findViewById(R.id.viewpager);
 
+        pagerAdapter = new TweetsPagerAdapter(getSupportFragmentManager());
         //set the adapter for the pager
-        vpPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager(), this));
+        vpPager.setAdapter(pagerAdapter);
 
         //setup
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
@@ -81,7 +86,9 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
             String text = data.getStringExtra("tweet");
             Log.d(TAG, "New tweet :" + text);
 
-            TwitterClient client = TwitterApp.getRestClient();
+            HomeTimelineFragment homeTimelineFragment = (HomeTimelineFragment) pagerAdapter.getRegisteredFragment(0);
+            homeTimelineFragment.postNewTweet(text);
+//            TwitterClient client = TwitterApp.getRestClient();
 //            client.postNewTweet(myJsonHttpResponseHandlerNewTweet, text);
 
         } else {

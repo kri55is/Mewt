@@ -1,9 +1,7 @@
 package com.codepath.apps.restclienttemplate.Adapter;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 
 import com.codepath.apps.restclienttemplate.fragments.HomeTimelineFragment;
 import com.codepath.apps.restclienttemplate.fragments.MentionsTimelineFragment;
@@ -12,21 +10,20 @@ import com.codepath.apps.restclienttemplate.fragments.MentionsTimelineFragment;
  * Created by emilie on 10/2/17.
  */
 
-public class TweetsPagerAdapter extends FragmentPagerAdapter {
+public class TweetsPagerAdapter extends SmartFragmentStatePagerAdapter {
 
+    private static int NUM_ITEMS = 2;
     private String tabTitles[] = new String[] {"Home", "Mentions"};
-    private Context context;
 
-    public TweetsPagerAdapter(FragmentManager fm, Context context){
+    public TweetsPagerAdapter(FragmentManager fm){
         super(fm);
-        this.context = context;
 
     }
 
-    //return total num of fragments
+    // Returns total number of pages
     @Override
     public int getCount() {
-        return 2;
+        return NUM_ITEMS;
     }
 
     //return the fragment to use depending on position
@@ -42,10 +39,14 @@ public class TweetsPagerAdapter extends FragmentPagerAdapter {
         }
     }
 
+
     //return fragment title
     @Override
     public CharSequence getPageTitle(int position) {
         //generate title based on item position
         return tabTitles[position];
     }
+
 }
+
+
