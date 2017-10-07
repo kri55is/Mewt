@@ -17,7 +17,8 @@ import com.codepath.apps.restclienttemplate.TwitterClient;
 import com.codepath.apps.restclienttemplate.fragments.TweetsListFragments;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
-public class TimelineActivity extends AppCompatActivity implements TweetsListFragments.TweetSelectedListener {
+public class TimelineActivity extends AppCompatActivity implements TweetsListFragments.TweetSelectedListener{
+
 
     private final String TAG = "TimelineActivityTAG";
 
@@ -60,12 +61,12 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
         if (id == R.id.action_create) {
             Log.d(TAG, "action create tweet clicked");
 
-            Intent intent= new Intent(this, CreateTweetActivity.class);
+            Intent intent = new Intent(this, CreateTweetActivity.class);
             startActivityForResult(intent, REQUEST_CODE);
 
             return true;
         }
-        if (id == R.id.miProfile){
+        if (id == R.id.miProfile) {
             Intent intent = new Intent(this, ProfileActivity.class);
             startActivity(intent);
 

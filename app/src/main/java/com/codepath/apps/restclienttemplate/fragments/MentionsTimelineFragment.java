@@ -64,6 +64,12 @@ public class MentionsTimelineFragment extends TweetsListFragments {
         }
     };
 
+    @Override
+    public void loadTweets() {
+//        Toast.makeText(getContext(),"loadMoreTweets mensionTimeline",Toast.LENGTH_SHORT).show();
+        handler.postDelayed(makeQueryWithDelay, 3000);
+    }
+
     public class MyJsonHttpResponseHandler extends JsonHttpResponseHandler
     {
         @Override
@@ -107,6 +113,7 @@ public class MentionsTimelineFragment extends TweetsListFragments {
             Log.d(TAG, errorResponse.toString());
             throwable.printStackTrace();
         }
+
     }
 
 }

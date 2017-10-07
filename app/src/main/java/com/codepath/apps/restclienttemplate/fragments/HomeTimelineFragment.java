@@ -41,17 +41,12 @@ public class HomeTimelineFragment extends TweetsListFragments {
         client = TwitterApp.getRestClient();
 
         myJsonHttpResponseHandler = new MyJsonHttpResponseHandler();
-//        myJsonHttpResponseHandlerUser = new MyJsonHttpResponseHandlerUser();
         myJsonHttpResponseHandlerNewTweet = new MyJsonHttpResponseHandlerNewTweet();
 
-//        getMyUSerInfo();
         populateHomeTimeline();
 
     }
 
-//    private void getMyUSerInfo() {
-//        client.getUserInfo(myJsonHttpResponseHandlerUser);
-//    }
 
 
     private void populateHomeTimeline() {
@@ -164,4 +159,9 @@ public class HomeTimelineFragment extends TweetsListFragments {
         }
     }
 
+    @Override
+    public void loadTweets() {
+//        Toast.makeText(getContext(),"loadMoreTweets homeTimeline",Toast.LENGTH_SHORT).show();
+        handler.postDelayed(makeQueryWithDelay, 3000);
+    }
 }

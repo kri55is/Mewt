@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.Adapter.TweetAdapter;
 import com.codepath.apps.restclienttemplate.R;
@@ -71,8 +70,7 @@ public class TweetsListFragments extends Fragment implements TweetAdapter.TweetA
         mEndlessScrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-//                handler.postDelayed(makeQueryWithDelay, 3000);
-                Toast.makeText(getContext(), "should load more", Toast.LENGTH_SHORT).show();;
+                loadTweets();
             }
         };
         mRvTweets.addOnScrollListener(mEndlessScrollListener);
@@ -80,6 +78,10 @@ public class TweetsListFragments extends Fragment implements TweetAdapter.TweetA
         mRvTweets.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
         return v;
+    }
+
+    public void loadTweets(){
+//        Toast.makeText(getContext(),"loadMoreTweets TweetList fragment",Toast.LENGTH_SHORT).show();
     }
 
 

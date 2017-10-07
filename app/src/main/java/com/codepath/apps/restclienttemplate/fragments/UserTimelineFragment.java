@@ -129,5 +129,9 @@ public class UserTimelineFragment extends TweetsListFragments {
         }
     }
 
-
+    @Override
+    public void loadTweets() {
+//        Toast.makeText(getContext(),"loadMoreTweets USerTimeline",Toast.LENGTH_SHORT).show();
+        handler.postDelayed(makeQueryWithDelay, 3000);
+    }
 }
