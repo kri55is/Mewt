@@ -169,7 +169,7 @@ public class TweetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvDate = (TextView) itemView.findViewById(R.id.tvDate);
 
-            itemView.setOnClickListener(new View.OnClickListener(){
+            ivProfileImage.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     if (mListener != null){
@@ -207,7 +207,7 @@ public class TweetAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             tvDate = (TextView) itemView.findViewById(R.id.tvDate);
             ivTweetImage = (ImageView) itemView.findViewById(R.id.ivTweetImage);
 
-            itemView.setOnClickListener(new View.OnClickListener(){
+            ivProfileImage.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     if (mListener != null){
